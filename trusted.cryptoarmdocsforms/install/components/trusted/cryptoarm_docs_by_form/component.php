@@ -13,6 +13,7 @@ if (CModule::IncludeModuleEx('trusted.cryptoarmdocs') == MODULE_DEMO_EXPIRED) {
 };
 
 Loader::includeModule('trusted.cryptoarmdocs');
+Loader::includeModule('trusted.cryptoarmdocsforms');
 
 if (!Docs\Utils::checkAuthorization()) {
     echo '<font color="#FF0000">ERROR not authorized</font>';

@@ -3,6 +3,7 @@
 global $APPLICATION;
 
 require_once $_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/trusted.cryptoarmdocs/config.php";
+require_once $_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/trusted.cryptoarmdocsforms/config.php";
 
 foreach (glob(TR_CA_DOCS_MODULE_DIR_CLASSES_GENERAL . "/*.php") as $filename) {
     require_once $filename;
@@ -11,6 +12,16 @@ foreach (glob(TR_CA_DOCS_MODULE_DIR_CLASSES_GENERAL . "/*.php") as $filename) {
 foreach (glob(TR_CA_DOCS_MODULE_DIR_CLASSES . "/*.php") as $filename) {
     require_once $filename;
 }
+
+foreach (glob(TR_CA_DOCS_FORMS_MODULE_DIR_CLASSES_GENERAL . "/*.php") as $filename) {
+    require_once $filename;
+}
+
+foreach (glob(TR_CA_DOCS_FORMS_MODULE_DIR_CLASSES . "/*.php") as $filename) {
+    require_once $filename;
+}
+
+
 
 CJSCore::RegisterExt(
     "socketio",

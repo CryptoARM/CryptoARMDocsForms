@@ -14,6 +14,7 @@ if (CModule::IncludeModuleEx('trusted.cryptoarmdocs') == MODULE_DEMO_EXPIRED) {
 
 Loader::includeModule('trusted.cryptoarmdocs');
 Loader::includeModule('iblock');
+Loader::includeModule('trusted.cryptoarmdocsforms');
 
 $arResult = [];
 $arResult["PROPERTY"] = Docs\Form::getIBlockProperty($arParams["IBLOCK_ID"]);

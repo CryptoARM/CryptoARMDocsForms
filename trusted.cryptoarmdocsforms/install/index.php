@@ -7,8 +7,8 @@ use Bitrix\Main\ModuleManager;
 // use Bitrix\Main\Loader;
 use Trusted\CryptoARM\Docs;
 
-require_once $_SERVER['DOCUMENT_ROOT'] . '/bitrix/modules/trusted.cryptoarmdocs/include.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/bitrix/modules/trusted.cryptoarmdocs/classes/IBlock.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/bitrix/modules/trusted.cryptoarmdocsforms/include.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/bitrix/modules/trusted.cryptoarmdocsforms/classes/IBlock.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/bitrix/modules/trusted.cryptoarmdocs/classes/Database.php';
 
 Loc::loadMessages(__FILE__);
@@ -18,6 +18,7 @@ Loc::loadMessages(__FILE__);
 Class trusted_cryptoarmdocsforms extends CModule
 {
     // Required by the marketplace standards
+    const MODULE_ID = "trusted.cryptoarmdocsforms";
     var $MODULE_ID = "trusted.cryptoarmdocsforms";
     var $MODULE_NAME;
     var $MODULE_DESCRIPTION;
@@ -49,21 +50,21 @@ Class trusted_cryptoarmdocsforms extends CModule
 
         include __DIR__ . "/version.php";
 
-        if (!$this->d7Support() || !$this->coreModuleInstalled()
-        || !$this->ModuleIsRelevant(ModuleManager::getVersion("trusted.cryptoarmdocs"), $arModuleVersion["VERSION"])
-        || !$this->ModuleIsRelevant($arModuleVersion["VERSION"], ModuleManager::getVersion("trusted.cryptoarmdocs"))) {
+        if (!self::d7Support() || !self::coreModuleInstalled()
+        || !self::ModuleIsRelevant(ModuleManager::getVersion("trusted.cryptoarmdocs"), $arModuleVersion["VERSION"])
+        || !self::ModuleIsRelevant($arModuleVersion["VERSION"], ModuleManager::getVersion("trusted.cryptoarmdocs"))) {
             $APPLICATION->IncludeAdminFile(
                 Loc::getMessage("MOD_INSTALL_TITLE"),
-                 $DOCUMENT_ROOT . "/bitrix/modules/" . $this->MODULE_ID . "/install/step_cancel.php"
+                 $DOCUMENT_ROOT . "/bitrix/modules/" . self::MODULE_ID . "/install/step_cancel.php"
             );
         }
-        $this->InstallFiles();
+        self::InstallFiles();
          // $this->CreateDocsDir();
-         $this->InstallModuleOptions();
+        self::InstallModuleOptions();
           // $this->InstallDB();
-         $this->InstallIb();
-         $this->InstallMailEvents();
-         ModuleManager::registerModule($this->MODULE_ID);
+          self::InstallIb();
+          self::InstallMailEvents();
+        ModuleManager::registerModule(self::MODULE_ID);
     }
 
     function d7Support()
@@ -76,6 +77,7 @@ Class trusted_cryptoarmdocsforms extends CModule
         return IsModuleInstalled("trusted.cryptoarmdocs");
     }
 
+    // Used to compare versions of core and module
     function ModuleIsRelevant($module1, $module2)
     {
         $module1 = explode(".", $module1);
@@ -87,12 +89,12 @@ Class trusted_cryptoarmdocsforms extends CModule
     function InstallFiles()
     {
         CopyDirFiles(
-            $_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/" . $this->MODULE_ID . "/install/components/",
+            $_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/" . self::MODULE_ID . "/install/components/",
             $_SERVER["DOCUMENT_ROOT"] . "/bitrix/components/",
             true, true
         );
         CopyDirFiles(
-            $_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/" . $this->MODULE_ID . "/install/admin/",
+            $_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/" . self::MODULE_ID . "/install/admin/",
             $_SERVER["DOCUMENT_ROOT"] . "/bitrix/admin/",
             true, false
         );
@@ -125,11 +127,11 @@ Class trusted_cryptoarmdocsforms extends CModule
             // 'MAIL_EVENT_ID_TO' => 'TR_CA_DOCS_MAIL_TO',
             // 'MAIL_EVENT_ID_SHARE' => 'TR_CA_DOCS_MAIL_SHARE',
             'MAIL_EVENT_ID_FORM' => 'TR_CA_DOCS_MAIL_FORM',
-            // 'MAIL_EVENT_ID_FORM_TO_ADMIN' => 'TR_CA_DOCS_MAIL_FORM_TO_ADMIN',
+            'MAIL_EVENT_ID_FORM_TO_ADMIN' => 'TR_CA_DOCS_MAIL_FORM_TO_ADMIN',
         );
         foreach ($options as $name => $value) {
-            if (!Option::get($this->MODULE_ID, $name, '')) {
-                Option::set($this->MODULE_ID, $name, $value);
+            if (!Option::get('trusted.cryptoarmdocs', $name, '')) {
+                Option::set('trusted.cryptoarmdocs', $name, $value);
             }
         }
     }
@@ -329,7 +331,7 @@ Class trusted_cryptoarmdocsforms extends CModule
             // }
 
         self::UnInstallFiles();
-        ModuleManager::unRegisterModule('trusted.cryptoarmdocsforms');
+        ModuleManager::unRegisterModule(self::MODULE_ID);
             // $APPLICATION->IncludeAdminFile(
             //     Loc::getMessage("MOD_UNINSTALL_TITLE"),
             //     $_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/" . $this->MODULE_ID . "/install/unstep2.php"
@@ -345,10 +347,11 @@ Class trusted_cryptoarmdocsforms extends CModule
         //     DeleteDirFilesEx("/bitrix/components/trusted/cryptoarm_docs_crm/");
         // }
         DeleteDirFilesEx("/bitrix/components/trusted/cryptoarm_docs_form/");
+        DeleteDirFilesEx("/bitrix/components/trusted/cryptoarm_docs_by_form/");
         // DeleteDirFilesEx("/bitrix/components/trusted/cryptoarm_docs_upload/");
         // DeleteDirFilesEx("/bitrix/components/trusted/docs/");
         DeleteDirFiles(
-            $_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/" . 'trusted.cryptoarmdocsforms' . "/install/admin/",
+            $_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/" . self::MODULE_ID . "/install/admin/",
             $_SERVER["DOCUMENT_ROOT"] . "/bitrix/admin"
         );
         // DeleteDirFilesEx("/bitrix/js/" . $this->MODULE_ID);
@@ -378,7 +381,7 @@ Class trusted_cryptoarmdocsforms extends CModule
         );
         foreach ($options as $option) {
             Option::delete(
-                'trusted.cryptoarmdocsforms',
+                self::MODULE_ID,
                 array('name' => $option)
             );
         }

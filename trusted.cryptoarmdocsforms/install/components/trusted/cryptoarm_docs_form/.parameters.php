@@ -8,6 +8,7 @@ use Bitrix\Main\Loader;
 
 Loader::includeModule('iblock');
 Loader::includeModule('trusted.cryptoarmdocs');
+Loader::includeModule('trusted.cryptoarmdocsforms');
 
 $formIBlocks[0] = Loc::getMessage("TR_CA_DOCS_COMP_FORM_PARAMETERS_IBLOCK_ID_NAME");
 

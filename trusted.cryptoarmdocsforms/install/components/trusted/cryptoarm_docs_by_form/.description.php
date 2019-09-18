@@ -7,10 +7,10 @@ use Bitrix\Main\Localization\Loc;
 $arComponentDescription = [
     'NAME' => Loc::getMessage("TR_CA_DOCS_COMP_DOCS_BY_FORM_NAME"),
     'DESCRIPTION' => Loc::getMessage("TR_CA_DOCS_COMP_DOCS_BY_FORM_DESCRIPTION"),
-    'PATH' => [
+    'PATH' => array(
         'ID' => 'CryptoARM Documents',
-        "NAME" => Loc::getMessage("TR_CA_DOCS_COMP_DOCS_BY_FORM_NAME"),
-    ],
-    'CACHE_PATH' => 'Y',
-    'COMPLEX' => 'Y'
+        "NAME" => Loc::getMessage("TR_CA_DOCS_COMP_DOCS_BY_FORM_PATH_NAME"),
+    ),
+    'CACHE_PATH' => 'N',
+    'COMPLEX' => 'N'
 ];

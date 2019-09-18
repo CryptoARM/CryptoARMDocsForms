@@ -8,11 +8,8 @@ use Bitrix\Main\Localization\Loc;
 
 Loc::loadMessages(__FILE__);
 
-
-require_once $_SERVER['DOCUMENT_ROOT'] . '/bitrix/modules/trusted.cryptoarmdocs/config.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/bitrix/modules/trusted.cryptoarmdocs/include.php';
-
 Loader::includeModule('iblock');
+Loader::includeModule('trusted.cryptoarmdocsforms');
 
 class IBlock {
     public static function install() {
