@@ -294,7 +294,7 @@ class Form {
         );
 
         $pdfOwner = Utils::getUserName(Utils::currUserId());
-        $dateCreation = date("Y-m-d H:i:s");
+        $dateCreation = date("Y-m-d H-i-s");
 
         $author = Loc::getMessage('TR_CA_DOC_MODULE_NAME');
         $title = Loc::getMessage('TR_CA_DOC_PDF_FORM_TITLE') . " " . $pdfOwner . " " . $dateCreation;
