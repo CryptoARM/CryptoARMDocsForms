@@ -102,7 +102,7 @@ use Bitrix\Main\Application;
                                 </a>
 
                                 <?
-                                $downloadJs = "trustedCA.content($docIds, '$zipName')"
+                                $downloadJs = "trustedCA.download($docIds, '$zipName')"
                                 ?>
                                 <div class="icon-wrapper"
                                      title="<?= Loc::getMessage("TR_CA_DOCS_COMP_DOCS_BY_FORM_DOWNLOAD"); ?>"
