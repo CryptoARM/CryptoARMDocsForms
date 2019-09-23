@@ -89,19 +89,18 @@ use Bitrix\Main\Application;
                         <div class="document-item__right_form">
                             <div class="icon_content">
                                 <?
-                                $viewJs = "trustedCA.download([$mainDocId], true)";
-                                ?>
-                                <a href="<?= Docs\Form::getFirstDocument($mainDocId) ?>" target="_blank">
-                                    <div class="icon-wrapper"
-                                         title="<?= Loc::getMessage("TR_CA_DOCS_COMP_DOCS_BY_FORM_VIEW"); ?>"
-                                         >
-                                        <i class="material-icons">
-                                            pageview
-                                        </i>
-                                    </div>
-                                </a>
-
-                                <?
+                                if (is_numeric($mainDocId)) {
+                                    ?>
+                                    <a href="<?= Docs\Form::getFirstDocument((int)$mainDocId) ?>" target="_blank">
+                                        <div class="icon-wrapper"
+                                             title="<?= Loc::getMessage("TR_CA_DOCS_COMP_DOCS_BY_FORM_VIEW"); ?>">
+                                            <i class="material-icons">
+                                                pageview
+                                            </i>
+                                        </div>
+                                    </a>
+                                    <?
+                                }
                                 $downloadJs = "trustedCA.download($docIds, '$zipName')"
                                 ?>
                                 <div class="icon-wrapper"
