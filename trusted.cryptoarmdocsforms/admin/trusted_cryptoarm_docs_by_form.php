@@ -13,12 +13,16 @@ $app = Application::getInstance();
 $context = $app->getContext();
 $docRoot = $context->getServer()->getDocumentRoot();
 
+if (!(IsModuleInstalled($module_id))) {
+    echo GetMessage("TR_CA_DOCS_MODULE_CORE_DOES_NOT_EXIST");
+    return false;
+}
+
 if (CModule::IncludeModuleEx($module_id) == MODULE_DEMO_EXPIRED) {
     echo GetMessage("TR_CA_DOCS_MODULE_DEMO_EXPIRED");
-    die();
+    return false;
 };
 
-Loader::includeModule($module_id);
 Loader::includeModule("trusted.cryptoarmdocsforms");
 Loc::loadMessages($docRoot . "/bitrix/modules/" . $module_id . "/admin/trusted_cryptoarm_docs.php");
 

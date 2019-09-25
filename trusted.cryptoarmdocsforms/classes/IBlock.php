@@ -3,7 +3,6 @@
 namespace Trusted\CryptoARM\Docs;
 
 use Bitrix\Main\Loader;
-use Bitrix\Main\Config\Option;
 use Bitrix\Main\Localization\Loc;
 
 Loc::loadMessages(__FILE__);

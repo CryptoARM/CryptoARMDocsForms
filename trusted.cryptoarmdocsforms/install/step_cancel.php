@@ -2,7 +2,6 @@
 use Bitrix\Main\Localization\Loc;
 use Bitrix\Main\ModuleManager;
 
-
 # TODO: Use single cancel page for all terminations
 # TODO: Add curl check during installation
 

@@ -7,10 +7,15 @@ use Bitrix\Main\Loader;
 use Bitrix\Main\Localization\Loc;
 use Bitrix\Main\Config\Option;
 
+if (!(IsModuleInstalled('trusted.cryptoarmdocs'))) {
+    echo GetMessage("TR_CA_DOCS_MODULE_CORE_DOES_NOT_EXIST");
+    return false;
+}
+
 if (CModule::IncludeModuleEx('trusted.cryptoarmdocs') == MODULE_DEMO_EXPIRED) {
     echo GetMessage("TR_CA_DOCS_MODULE_DEMO_EXPIRED");
     return false;
-};
+}
 
 Loader::includeModule('trusted.cryptoarmdocs');
 Loader::includeModule('iblock');

@@ -6,8 +6,6 @@ use Bitrix\Main\Localization\Loc;
 use Bitrix\Main\Config\Option;
 use Bitrix\Main\Loader;
 
-require_once TR_CA_DOCS_MODULE_DIR_CLASSES . '/tcpdf_min/tcpdf.php';
-
 Loader::includeModule('iblock');
 
 class Form {
@@ -282,6 +280,8 @@ class Form {
         ];
 
         $props = self::getIBlockElementInfo($iBlockId, $iBlockElementId);
+
+        require_once TR_CA_DOCS_MODULE_DIR_CLASSES . 'tcpdf_min/tcpdf.php';
 
         $pdf = new \TCPDF(
             'P',        // orientation - [P]ortrait or [L]andscape
