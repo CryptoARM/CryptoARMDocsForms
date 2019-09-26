@@ -30,6 +30,10 @@ use Bitrix\Main\Application;
 
                     $docIds = json_encode($docIds);
                     $mainDocId = $form["NAME"];
+                    $mainDoc = null;
+                    if (is_numeric($mainDocId)) {
+                        $mainDoc = Docs\Database::getDocumentById($mainDocId);
+                    }
 
                     $zipName = Loc::getMessage("TR_CA_DOCS_COMP_DOCS_BY_FORM_ZIP_FILE_NAME") . $form["DATE_CREATE"];
 
@@ -89,7 +93,7 @@ use Bitrix\Main\Application;
                         <div class="document-item__right_form">
                             <div class="icon_content">
                                 <?
-                                if (is_numeric($mainDocId)) {
+                                if ($mainDoc) {
                                     ?>
                                     <a href="<?= Docs\Form::getFirstDocument((int)$mainDocId) ?>" target="_blank">
                                         <div class="icon-wrapper"
@@ -101,16 +105,18 @@ use Bitrix\Main\Application;
                                     </a>
                                     <?
                                 }
-                                $downloadJs = "trustedCA.download($docIds, '$zipName')"
-                                ?>
-                                <div class="icon-wrapper"
-                                     title="<?= Loc::getMessage("TR_CA_DOCS_COMP_DOCS_BY_FORM_DOWNLOAD"); ?>"
-                                     onclick="<?= $downloadJs ?>">
-                                    <i class="material-icons">
-                                        save_alt
-                                    </i>
-                                </div>
-                                <?
+                                if (!empty(json_decode($docIds))) {
+                                    $downloadJs = "trustedCA.download($docIds, '$zipName')"
+                                    ?>
+                                    <div class="icon-wrapper"
+                                         title="<?= Loc::getMessage("TR_CA_DOCS_COMP_DOCS_BY_FORM_DOWNLOAD"); ?>"
+                                         onclick="<?= $downloadJs ?>">
+                                        <i class="material-icons">
+                                            save_alt
+                                        </i>
+                                    </div>
+                                    <?
+                                }
                                 if ($arResult["PERMISSION_REMOVE"]) {
                                     $removeJs = "trustedCA.removeForm([$formId], trustedCA.reloadDoc)";
                                     ?>
