@@ -44,7 +44,7 @@ Class trusted_cryptoarmdocsforms extends CModule
 
         include __DIR__ . "/version.php";
 
-        if (!self::d7Support() || !self::coreModuleInstalled() || self::CoreAndModuleAreCompatible() !== true ) {
+        if (!self::d7Support() || !self::coreModuleInstalled() || self::CoreAndModuleAreCompatible() !== "ok" ) {
             $APPLICATION->IncludeAdminFile(
                 Loc::getMessage("MOD_INSTALL_TITLE"),
                  $DOCUMENT_ROOT . "/bitrix/modules/" . self::MODULE_ID . "/install/step_cancel.php"
@@ -54,8 +54,8 @@ Class trusted_cryptoarmdocsforms extends CModule
          // $this->CreateDocsDir();
         self::InstallModuleOptions();
           // $this->InstallDB();
-          self::InstallIb();
-          self::InstallMailEvents();
+        self::InstallIb();
+        self::InstallMailEvents();
         ModuleManager::registerModule(self::MODULE_ID);
     }
 
@@ -79,7 +79,7 @@ Class trusted_cryptoarmdocsforms extends CModule
             $res = "updateCore";
         } elseif (intval($moduleVersion[0])<intval($coreVersion[0])) {
             $res = "updateModule";
-        } else $res = true;
+        } else $res = "ok";
 
         return $res;
     }
@@ -187,7 +187,7 @@ Class trusted_cryptoarmdocsforms extends CModule
         if ($step < 2) {
             $APPLICATION->IncludeAdminFile(
                 Loc::getMessage("MOD_UNINSTALL_TITLE"),
-                $_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/" . 'trusted.cryptoarmdocsforms' . "/install/unstep1.php"
+                $_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/" . self::MODULE_ID . "/install/unstep1.php"
             );
         }
 
