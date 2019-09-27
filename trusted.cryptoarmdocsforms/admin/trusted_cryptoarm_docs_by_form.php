@@ -4,8 +4,10 @@ use Trusted\CryptoARM\Docs;
 use Bitrix\Main\Localization\Loc;
 use Bitrix\Main\Loader;
 use Bitrix\Main\Application;
+use Bitrix\Main\ModuleManager;
 
 require_once $_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_admin_before.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . '/bitrix/modules/trusted.cryptoarmdocsforms/install/index.php';
 
 $module_id = "trusted.cryptoarmdocs";
 
@@ -13,9 +15,23 @@ $app = Application::getInstance();
 $context = $app->getContext();
 $docRoot = $context->getServer()->getDocumentRoot();
 
-if (!(IsModuleInstalled($module_id))) {
-    echo GetMessage("TR_CA_DOCS_MODULE_CORE_DOES_NOT_EXIST");
+if (!trusted_cryptoarmdocsforms::coreModuleInstalled()) {
+    require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_admin_after.php");
+    echo CAdminMessage::ShowMessage(Loc::getMessage("TR_CA_DOCS_NO_CORE_MODULE"));
     return false;
+}
+switch (trusted_cryptoarmdocsforms::CoreAndModuleAreCompatible()) {
+    case "updateCore":
+        require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_admin_after.php");
+        echo CAdminMessage::ShowMessage(getMessage("TR_CA_DOCS_UPDATE_CORE_MODULE") . intval(ModuleManager::getVersion("trusted.cryptoarmdocsforms")) . Loc::getMessage("TR_CA_DOCS_UPDATE_CORE_MODULE2"));
+        return false;
+        break;
+    case "updateModule":
+        require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_admin_after.php");
+        echo CAdminMessage::ShowMessage(Loc::getMessage("TR_CA_DOCS_UPDATE_MODULE"));
+        return false;
+        break;
+    default: break;
 }
 
 if (CModule::IncludeModuleEx($module_id) == MODULE_DEMO_EXPIRED) {
