@@ -51,11 +51,10 @@ Class trusted_cryptoarmdocsforms extends CModule
             );
         }
         self::InstallFiles();
-         // $this->CreateDocsDir();
         self::InstallModuleOptions();
-          // $this->InstallDB();
         self::InstallIb();
         self::InstallMailEvents();
+
         ModuleManager::registerModule(self::MODULE_ID);
     }
 
@@ -66,14 +65,14 @@ Class trusted_cryptoarmdocsforms extends CModule
 
     function coreModuleInstalled()
     {
-        return IsModuleInstalled("trusted.cryptoarmdocs");
+        return IsModuleInstalled(TR_CA_DOCS_CORE_MODULE);
     }
 
     // Used to compare versions of core and module
     function CoreAndModuleAreCompatible()
     {
         include __DIR__ . "/version.php";
-        $coreVersion = explode(".", ModuleManager::getVersion("trusted.cryptoarmdocs"));
+        $coreVersion = explode(".", ModuleManager::getVersion(TR_CA_DOCS_CORE_MODULE));
         $moduleVersion = explode(".", $arModuleVersion["VERSION"]);
         if (intval($moduleVersion[0])>intval($coreVersion[0])) {
             $res = "updateCore";
@@ -106,8 +105,8 @@ Class trusted_cryptoarmdocsforms extends CModule
             'MAIL_EVENT_ID_FORM_TO_ADMIN' => 'TR_CA_DOCS_MAIL_FORM_TO_ADMIN',
         );
         foreach ($options as $name => $value) {
-            if (!Option::get('trusted.cryptoarmdocs', $name, '')) {
-                Option::set('trusted.cryptoarmdocs', $name, $value);
+            if (!Option::get(TR_CA_DOCS_CORE_MODULE, $name, '')) {
+                Option::set(TR_CA_DOCS_CORE_MODULE, $name, $value);
             }
         }
     }
@@ -172,7 +171,7 @@ Class trusted_cryptoarmdocsforms extends CModule
         );
         foreach ($templates as $templateName => $template) {
             $templateId = $obEventMessage->add($template);
-            Option::set("trusted.cryptoarmdocs", $templateName, $templateId);
+            Option::set(TR_CA_DOCS_CORE_MODULE, $templateName, $templateId);
         }
     }
 

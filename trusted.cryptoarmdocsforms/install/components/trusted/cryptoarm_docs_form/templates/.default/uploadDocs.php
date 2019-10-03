@@ -9,8 +9,9 @@ use Bitrix\Main\Localization\Loc;
 
 global $USER;
 
-Loader::includeModule('trusted.cryptoarmdocs');
 Loader::includeModule('trusted.cryptoarmdocsforms');
+Loader::includeModule(TR_CA_DOCS_CORE_MODULE);
+
 
 if (!Docs\Utils::checkAuthorization()) {
     echo '<script>alert("' . Loc::getMessage("TR_CA_DOCS_COMP_FORM_LOGIN_FAILED") . '")</script>';

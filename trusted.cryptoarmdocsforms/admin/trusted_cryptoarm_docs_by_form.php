@@ -9,8 +9,6 @@ use Bitrix\Main\ModuleManager;
 require_once $_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_admin_before.php";
 require_once $_SERVER['DOCUMENT_ROOT'] . '/bitrix/modules/trusted.cryptoarmdocsforms/install/index.php';
 
-$module_id = "trusted.cryptoarmdocs";
-
 $app = Application::getInstance();
 $context = $app->getContext();
 $docRoot = $context->getServer()->getDocumentRoot();
@@ -34,16 +32,17 @@ switch (trusted_cryptoarmdocsforms::CoreAndModuleAreCompatible()) {
     default: break;
 }
 
-if (CModule::IncludeModuleEx($module_id) == MODULE_DEMO_EXPIRED) {
+Loader::includeModule("trusted.cryptoarmdocsforms");
+if (CModule::IncludeModuleEx(TR_CA_DOCS_CORE_MODULE) == MODULE_DEMO_EXPIRED) {
     echo GetMessage("TR_CA_DOCS_MODULE_DEMO_EXPIRED");
     return false;
 };
+Loader::includeModule(TR_CA_DOCS_CORE_MODULE);
 
-Loader::includeModule("trusted.cryptoarmdocsforms");
-Loc::loadMessages($docRoot . "/bitrix/modules/" . $module_id . "/admin/trusted_cryptoarm_docs.php");
+Loc::loadMessages($docRoot . "/bitrix/modules/" . TR_CA_DOCS_CORE_MODULE . "/admin/trusted_cryptoarm_docs.php");
 
 // current user rights for the module
-$POST_RIGHT = $APPLICATION->GetGroupRight($module_id);
+$POST_RIGHT = $APPLICATION->GetGroupRight(TR_CA_DOCS_CORE_MODULE);
 
 $sTableID = "Form_ID";
 $oSort = new CAdminSorting($sTableID, 'SORT', 'asc');

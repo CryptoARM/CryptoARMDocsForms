@@ -524,7 +524,7 @@ class Form {
                 ['ID' => $id]
             )->GetNextElement()->GetFields()["CREATED_BY"];
 
-            if ($createdBy != $userId) {
+            if (!($createdBy == $userId || $USER->IsAdmin())) {
                 $res['message'] = 'No access';
                 return $res;
             }
