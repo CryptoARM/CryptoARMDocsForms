@@ -10,10 +10,6 @@ use Bitrix\Main\Config\Option;
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/bitrix/modules/trusted.cryptoarmdocsforms/install/index.php';
 
-if (CModule::IncludeModuleEx('trusted.cryptoarmdocs') == MODULE_DEMO_EXPIRED) {
-    echo GetMessage("TR_CA_DOCS_MODULE_DEMO_EXPIRED");
-    return false;
-};
 if (!trusted_cryptoarmdocsforms::coreModuleInstalled()) {
     echo ShowMessage(Loc::getMessage("TR_CA_DOCS_NO_CORE_MODULE"));
     return false;
@@ -31,6 +27,10 @@ switch (trusted_cryptoarmdocsforms::CoreAndModuleAreCompatible()) {
 }
 
 Loader::includeModule('trusted.cryptoarmdocsforms');
+if (CModule::IncludeModuleEx(TR_CA_DOCS_CORE_MODULE) == MODULE_DEMO_EXPIRED) {
+    echo GetMessage("TR_CA_DOCS_MODULE_DEMO_EXPIRED");
+    return false;
+};
 
 if (!Docs\Utils::checkAuthorization()) {
     echo '<font color="#FF0000">ERROR not authorized</font>';

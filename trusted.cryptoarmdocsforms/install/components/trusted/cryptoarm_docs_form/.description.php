@@ -11,6 +11,7 @@ $arComponentDescription = [
         'ID' => 'CryptoARM Documents',
         "NAME" => Loc::getMessage("TR_CA_DOCS_COMP_FORM_PATH_NAME"),
     ),
-    'CACHE_PATH' => 'Y',
+    'CACHE_PATH' => 'N',
+    'COMPLEX' => 'N',
 ];
 

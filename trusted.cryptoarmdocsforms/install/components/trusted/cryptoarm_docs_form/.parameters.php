@@ -7,8 +7,8 @@ use Bitrix\Main\Localization\Loc;
 use Bitrix\Main\Loader;
 
 Loader::includeModule('iblock');
-Loader::includeModule('trusted.cryptoarmdocs');
 Loader::includeModule('trusted.cryptoarmdocsforms');
+Loader::includeModule(TR_CA_DOCS_CORE_MODULE);
 
 $formIBlocks[0] = Loc::getMessage("TR_CA_DOCS_COMP_FORM_PARAMETERS_IBLOCK_ID_NAME");
 
