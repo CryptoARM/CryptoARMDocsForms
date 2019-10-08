@@ -55,6 +55,7 @@ main.document-card {
 
 .document-card__content .document-content__item {
     color: rgba(0, 0, 0, 0.87);
+    height: 56px;
 }
 
 .document-card .document-card__content {
