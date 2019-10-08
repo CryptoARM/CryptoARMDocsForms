@@ -95,7 +95,9 @@ use Bitrix\Main\Application;
                                 <?
                                 if ($mainDoc) {
                                     ?>
-                                    <a href="<?= Docs\Form::getFirstDocument((int)$mainDocId) ?>" target="_blank">
+                                    <a href="<?= Docs\Form::getFirstDocument((int)$mainDocId) ?>"
+                                       class="pdf-link"
+                                       target="_blank">
                                         <div class="icon-wrapper"
                                              title="<?= Loc::getMessage("TR_CA_DOCS_COMP_DOCS_BY_FORM_VIEW"); ?>">
                                             <i class="material-icons">

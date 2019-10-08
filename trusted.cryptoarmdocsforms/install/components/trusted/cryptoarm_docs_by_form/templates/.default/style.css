@@ -279,3 +279,7 @@ p {
     position: absolute;
     opacity: 0;
 }
+
+.document-content__item .pdf-link {
+    text-decoration: none;
+}
