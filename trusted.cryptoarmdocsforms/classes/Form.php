@@ -80,7 +80,9 @@ class Form {
         );
 
         while ($propAdd_fields = $responseAdditional->GetNext()) {
-            $properties[$propAdd_fields["PROPERTY_ID"]]["ADDITIONAL"][$propAdd_fields["ID"]] = $propAdd_fields["VALUE"];
+            if (array_key_exists($propAdd_fields["PROPERTY_ID"], $properties)) {
+                $properties[$propAdd_fields["PROPERTY_ID"]]["ADDITIONAL"][$propAdd_fields["ID"]] = $propAdd_fields["VALUE"];
+            }
         }
 
         return $properties;
@@ -221,7 +223,10 @@ class Form {
             if (stristr($key, "input_html_")) {
                 $key = str_ireplace("input_html_", "", $key);
                 if (Utils::isNotEmpty($value)) {
-                    $someArray[$key] = $value;
+                    $someArray[$key]["VALUE"] = [
+                        "TYPE" => "HTML",
+                        "TEXT" => $value
+                    ];
                 }
                 continue;
             }

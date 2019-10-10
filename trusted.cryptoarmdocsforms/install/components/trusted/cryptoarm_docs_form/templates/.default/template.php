@@ -274,22 +274,22 @@ function createRadioButtonElement($value) {
                 <?
             }
             ?>
-            <input type="hidden"
-                   id="iBlock_id"
-                   name="iBlock_id"
-                   value="<?= $arParams["IBLOCK_ID"] ?>"
-            />
-            <input type="hidden"
-                   id="send_email_to_user"
-                   name="send_email_to_user"
-                   value="<?= $arResult["SEND_EMAIL_TO_USER"] ?>"
-            />
-            <input type="hidden"
-                   id="send_email_to_admin"
-                   name="send_email_to_admin"
-                   value="<?= $arResult["SEND_EMAIL_TO_ADMIN_ADDRESS"] ?>"
-            />
         </div>
+        <input type="hidden"
+               id="iBlock_id"
+               name="iBlock_id"
+               value="<?= $arParams["IBLOCK_ID"] ?>"
+        />
+        <input type="hidden"
+               id="send_email_to_user"
+               name="send_email_to_user"
+               value="<?= $arResult["SEND_EMAIL_TO_USER"] ?>"
+        />
+        <input type="hidden"
+               id="send_email_to_admin"
+               name="send_email_to_admin"
+               value="<?= $arResult["SEND_EMAIL_TO_ADMIN_ADDRESS"] ?>"
+        />
         <p>
         <div class="trca-sf-button-sign">
             <input type="submit"/>
