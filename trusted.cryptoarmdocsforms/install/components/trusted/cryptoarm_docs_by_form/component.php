@@ -20,7 +20,7 @@ switch (trusted_cryptoarmdocsforms::CoreAndModuleAreCompatible()) {
         return false;
         break;
     case "updateModule":
-        echo ShowMessage(Loc::getMessage("TR_CA_DOCS_UPDATE_MODULE"));
+        echo ShowMessage(Loc::getMessage("TR_CA_DOCS_UPDATE_FORMS_MODULE"));
         return false;
         break;
     default: break;

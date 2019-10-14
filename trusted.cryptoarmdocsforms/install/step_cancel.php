@@ -34,7 +34,7 @@ include __DIR__ . "/version.php";
             echo CAdminMessage::ShowMessage(Loc::getMessage("TR_CA_DOCS_UPDATE_CORE_MODULE") . intval($arModuleVersion["VERSION"]) . Loc::getMessage("TR_CA_DOCS_UPDATE_CORE_MODULE2"));
         }
         elseif ($res === "updateModule") {
-            echo CAdminMessage::ShowMessage(Loc::getMessage("TR_CA_DOCS_UPDATE_MODULE"));
+            echo CAdminMessage::ShowMessage(Loc::getMessage("TR_CA_DOCS_UPDATE_FORMS_MODULE"));
         }
         else {
             echo CAdminMessage::ShowMessage(Loc::getMessage("TR_CA_DOCS_CANCELLED"));
