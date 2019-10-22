@@ -8,7 +8,6 @@ use Bitrix\Main\Localization\Loc;
 Loc::loadMessages(__FILE__);
 
 Loader::includeModule('iblock');
-Loader::includeModule('trusted.cryptoarmdocsforms');
 
 class IBlock {
     public static function install() {
@@ -16,9 +15,9 @@ class IBlock {
     }
 
     public static function uninstall() {
-        $iBlockElements = Form::getIBlockElements("ID", "ASC", ["IBLOCK_TYPE" => TR_CA_IB_TYPE_ID]);
-        foreach ($iBlockElements as $key => $value ) {
-            \CIBlockElement::Delete($key);
+        $iBlockElements[] = Form::getIBlockElements("ID", "ASC", ["IBLOCK_TYPE" => TR_CA_IB_TYPE_ID]);
+        foreach ($iBlockElements as $iBlockElement) {
+            \CIBlockElement::Delete($iBlockElement);
         }
 
         $iBlockIds = Form::getIBlocksId();
