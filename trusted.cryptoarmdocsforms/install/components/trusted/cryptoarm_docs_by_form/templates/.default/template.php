@@ -17,7 +17,9 @@ use Bitrix\Main\Application;
 
             <div class="document-card__content">
                 <?
-                foreach ($arResult["FORMS"] as $form) {
+                $arRes = array();
+                $arRes[] = $arResult["FORMS"];
+                foreach ($arRes as $form) {
                     $formId = $form["ID"];
                     $docs = Docs\Database::getDocumentsByPropertyTypeAndValue("FORM", $formId);
                     $docList = $docs->getList();
