@@ -25,6 +25,7 @@
 .crypto-arm-document__send-form .trca-sf-input-number input[type=number] {
     -moz-appearance: textfield;
     appearance: textfield;
+    outline: none;
 }
 
 .crypto-arm-document__send-form .trca-sf-input-number input[type=number]::-webkit-inner-spin-button,
@@ -40,6 +41,7 @@
 .crypto-arm-document__send-form .trca-sf-input input[type=text] {
     box-sizing: border-box;
     resize: none;
+    outline: none;
 }
 
 .crypto-arm-document__send-form .send-form-data .trca-sf-input-number {
@@ -346,6 +348,7 @@
 .crypto-arm-document__send-form .trca-sf-date input {
     border: none;
     border-bottom: 1px solid #ccc;
+    outline: none;
 }
 
 .crypto-arm-document__send-form .trca-sf-date input::-webkit-clear-button {
