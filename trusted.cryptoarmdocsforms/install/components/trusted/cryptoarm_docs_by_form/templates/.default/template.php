@@ -5,17 +5,38 @@ use Trusted\CryptoARM\Docs;
 use Bitrix\Main\Localization\Loc;
 use Bitrix\Main\Application;
 
+//checks the name of currently installed core from highest possible version to lowest
+$coreIds = [
+    'trusted.cryptoarmdocscrp',
+    'trusted.cryptoarmdocsbusiness',
+    'trusted.cryptoarmdocsstart',
+];
+foreach ($coreIds as $coreId) {
+    $corePathDir = $_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/" . $coreId . "/";
+    if (file_exists($corePathDir)) {
+        $module_id = $coreId;
+        break;
+    }
+}
+
+$this->addExternalJS("https://cdn.jsdelivr.net/npm/vue/dist/vue.js");
+CJSCore::RegisterExt(
+    "components",
+    [
+        "js" => "/bitrix/js/" . $module_id . "/components.js",
+    ]
+);
+CUtil::InitJSCore(['components']);
+
+$compTitle = Loc::getMessage("TR_CA_DOCS_COMP_DOCS_BY_FORM_TITLE");
+
 ?>
 <form id="crypto-arm-document__by-form" method="POST">
-    <div id="main-document">
-        <main class="document-card">
-            <div class="document-card__title_form">
-                <?=
-                Loc::getMessage("TR_CA_DOCS_COMP_DOCS_BY_FORM_TITLE")
-                ?>
-            </div>
-
-            <div class="document-card__content">
+    <div id="cryptoarm_docs_by_form">
+        <trca-docs>
+            <header-title title="<?= $compTitle ?>">
+            </header-title>
+            <docs-content>
                 <?
                 if (is_array($arResult["FORMS"])) {
                     foreach ($arResult["FORMS"] as $form) {
@@ -73,74 +94,70 @@ use Bitrix\Main\Application;
                             }
                         }
                         ?>
-                        <div class="document-content__item">
-                            <div class="document-item__left_form">
-                                <div class="material-icons" style="<?= $iconCss ?>">
-                                    <?=
-                                    $icon
-                                    ?>
-                                </div>
-                                <div class="date_create">
-                                    <?=
-                                    $form["DATE_CREATE"]
-                                    ?>
-                                </div>
-                                <div class="iblock_name">
-                                    <?=
-                                    $form["IBLOCK_NAME"]
-                                    ?>
-                                </div>
-                            </div>
-                            <div class="document-item__right_form">
-                                <div class="icon_content">
+                        <docs-items>
+                            <doc-name color="<?= $iconCss ?>"
+                                      name ="<?= $form["IBLOCK_NAME"] ?>">
+                            </doc-name>
+                            <doc-info info= "<?= $form["DATE_CREATE"] ?>">
+                            </doc-info>
+                            <doc-info info="<?= $mainDocId ?>"
+                                  title="<?= Loc::getMessage("TR_CA_DOCS_COMP_DOCS_BY_USER_ID"); ?>">
+                            </doc-info>
+
+                            <doc-buttons component="form">
                                     <?
                                     if ($mainDoc) {
                                         ?>
                                         <a href="<?= Docs\Form::getFirstDocument((int)$mainDocId) ?>"
-                                        class="pdf-link"
-                                        target="_blank">
-                                            <div class="icon-wrapper"
-                                                title="<?= Loc::getMessage("TR_CA_DOCS_COMP_DOCS_BY_FORM_VIEW"); ?>">
-                                                <i class="material-icons">
-                                                    pageview
-                                                </i>
-                                            </div>
+                                            target="_blank"
+                                            style="border:none; outline: none;">
+                                            <doc-button icon="pageview"
+                                                        title="<?= Loc::getMessage("TR_CA_DOCS_COMP_DOCS_BY_FORM_VIEW"); ?>">
+                                            </doc-button>
                                         </a>
                                         <?
                                     }
                                     if (!empty(json_decode($docIds))) {
-                                        $downloadJs = "trustedCA.download($docIds, '$zipName')"
                                         ?>
-                                        <div class="icon-wrapper"
-                                            title="<?= Loc::getMessage("TR_CA_DOCS_COMP_DOCS_BY_FORM_DOWNLOAD"); ?>"
-                                            onclick="<?= $downloadJs ?>">
-                                            <i class="material-icons">
-                                                save_alt
-                                            </i>
-                                        </div>
+                                        <doc-button-arr icon="file_download"
+                                                        :id="<?= $docIds ?>"
+                                                        zipname="<?= $zipName ?>"
+                                                        title="<?= Loc::getMessage("TR_CA_DOCS_COMP_DOCS_BY_FORM_DOWNLOAD"); ?>"
+                                                        @button-click="download">
+                                        </doc-button-arr>
                                         <?
                                     }
                                     if ($arResult["PERMISSION_REMOVE"]) {
-                                        $removeJs = "trustedCA.removeForm([$formId], trustedCA.reloadDoc)";
                                         ?>
-                                        <div class="icon-wrapper"
-                                            title="<?= Loc::getMessage("TR_CA_DOCS_COMP_DOCS_BY_FORM_DELETE"); ?>"
-                                            onclick="<?= $removeJs ?>">
-                                            <i class="material-icons">
-                                                delete
-                                            </i>
-                                        </div>
+                                        <doc-button icon="delete"
+                                                    title="<?= Loc::getMessage("TR_CA_DOCS_COMP_DOCS_BY_FORM_DELETE"); ?>"
+                                                    :id="<?= $formId ?>"
+                                                    @button-click="removeForm">
+                                        </doc-button>
                                         <?
                                     }
                                     ?>
-                                </div>
-                            </div>
-                        </div>
+                            </doc-buttons>
+                        </docs-items>
                         <?
                     }
                 }
                 ?>
-            </div>
-        </main>
+            </docs-content>
+        </trca-docs>
     </div>
 </form>
+
+<script>
+    new Vue({
+        el: '#cryptoarm_docs_by_form',
+        methods: {
+            download: function(id, zipname) {
+                trustedCA.download(id, zipname);
+            },
+            removeForm: function(id) {
+                trustedCA.removeForm(id, trustedCA.reloadDoc)
+            }
+        }
+    });
+</script>
