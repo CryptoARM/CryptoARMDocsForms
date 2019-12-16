@@ -56,6 +56,8 @@ foreach ($_FILES as $key => $value) {
             mkdir($newDocDir);
 
             $newDocFilename = Docs\Utils::mb_basename($fileName);
+            $newDocFilename = preg_replace('/[\s]+/u', '_', $newDocFilename);
+            $newDocFilename = preg_replace('/[^a-zA-Z' . Loc::getMessage("TR_CA_DOCS_CYR") . '0-9_\.-]/u', '', $newDocFilename);
             $absolutePath = $newDocDir . $newDocFilename;
             $relativePath = '/' . $DOCUMENTS_DIR . '/' . $uniqid . '/' . $newDocFilename;
 
