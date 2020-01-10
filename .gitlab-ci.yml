@@ -25,16 +25,16 @@ deploy_yellow:
     - sudo find /var/www/yellow/bitrix/modules/trusted.cryptoarmdocsforms/ -type d -exec chmod 2775 {} \;
   when: manual
   
-  deploy_red:
-      stage: deploy
-      only:
-        - web
-      script:
-        - sudo rm -rf /var/www/red/bitrix/modules/trusted.cryptoarmdocsforms/
-        - sudo cp -R trusted.cryptoarmdocsforms /var/www/red/bitrix/modules/
-        - sudo chown -R vv:www-data /var/www/red/bitrix/modules/trusted.cryptoarmdocsforms/
-        - sudo find /var/www/red/bitrix/modules/trusted.cryptoarmdocsforms/ -type f -exec chmod 0664 {} \;
-        - sudo find /var/www/red/bitrix/modules/trusted.cryptoarmdocsforms/ -type d -exec chmod 2775 {} \;
-      when: manual
+deploy_red:
+  stage: deploy
+  only:
+    - web
+  script:
+    - sudo rm -rf /var/www/red/bitrix/modules/trusted.cryptoarmdocsforms/
+    - sudo cp -R trusted.cryptoarmdocsforms /var/www/red/bitrix/modules/
+    - sudo chown -R vv:www-data /var/www/red/bitrix/modules/trusted.cryptoarmdocsforms/
+    - sudo find /var/www/red/bitrix/modules/trusted.cryptoarmdocsforms/ -type f -exec chmod 0664 {} \;
+    - sudo find /var/www/red/bitrix/modules/trusted.cryptoarmdocsforms/ -type d -exec chmod 2775 {} \;
+  when: manual
   
   
