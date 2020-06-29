@@ -31,6 +31,7 @@ CUtil::InitJSCore(['components']);
 $compTitle = Loc::getMessage("TR_CA_DOCS_COMP_DOCS_BY_FORM_TITLE");
 
 ?>
+<a id="trca-reload-doc" href="<?= $_SERVER["REQUEST_URI"] ?>"></a>
 <form id="crypto-arm-document__by-form" method="POST">
     <div id="cryptoarm_docs_by_form">
         <trca-docs>

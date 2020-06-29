@@ -17,5 +17,6 @@ $arComponentParameters = [
             'TYPE' => 'CHECKBOX',
             'DEFAULT' => 20,
         ],
+        'AJAX_MODE' => array(),
     ]
 ];
