@@ -29,11 +29,11 @@ CJSCore::RegisterExt(
 CUtil::InitJSCore(['components']);
 
 $compTitle = Loc::getMessage("TR_CA_DOCS_COMP_DOCS_BY_FORM_TITLE");
-
+$comp_id = Docs\Utils::generateUUID();
 ?>
 <a id="trca-reload-doc" href="<?= $_SERVER["REQUEST_URI"] ?>"></a>
 <form id="crypto-arm-document__by-form" method="POST">
-    <div id="cryptoarm_docs_by_form">
+    <div id="cryptoarm_docs_by_form_<?= $comp_id?>">
         <trca-docs>
             <header-title title="<?= $compTitle ?>">
             </header-title>
@@ -151,7 +151,7 @@ $compTitle = Loc::getMessage("TR_CA_DOCS_COMP_DOCS_BY_FORM_TITLE");
 
 <script>
     new Vue({
-        el: '#cryptoarm_docs_by_form',
+        el: '#cryptoarm_docs_by_form_<?= $comp_id?>',
         methods: {
             download: function(id, zipname) {
                 trustedCA.download(id, zipname);
