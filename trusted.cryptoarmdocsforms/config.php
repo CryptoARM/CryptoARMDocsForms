@@ -1,6 +1,7 @@
 <?php
 //checks the name of currently installed core from highest possible version to lowest
 $coreIds = array(
+    'trusted.cryptoarmdocsfree',
     'trusted.cryptoarmdocscrp',
     'trusted.cryptoarmdocsbusiness',
     'trusted.cryptoarmdocsstart',
