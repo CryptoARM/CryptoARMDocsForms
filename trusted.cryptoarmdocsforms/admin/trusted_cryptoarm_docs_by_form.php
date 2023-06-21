@@ -13,30 +13,30 @@ $app = Application::getInstance();
 $context = $app->getContext();
 $docRoot = $context->getServer()->getDocumentRoot();
 
-if (!trusted_cryptoarmdocsforms::coreModuleInstalled()) {
+$trusted_cryptoarmdocsforms = new trusted_cryptoarmdocsforms();
+if (!$trusted_cryptoarmdocsforms->coreModuleInstalled()) {
     require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_admin_after.php");
     echo CAdminMessage::ShowMessage(Loc::getMessage("TR_CA_DOCS_NO_CORE_MODULE"));
     return false;
 }
-switch (trusted_cryptoarmdocsforms::CoreAndModuleAreCompatible()) {
+switch ($trusted_cryptoarmdocsforms->CoreAndModuleAreCompatible()) {
     case "updateCore":
         require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_admin_after.php");
         echo CAdminMessage::ShowMessage(getMessage("TR_CA_DOCS_UPDATE_CORE_MODULE") . intval(ModuleManager::getVersion("trusted.cryptoarmdocsforms")) . Loc::getMessage("TR_CA_DOCS_UPDATE_CORE_MODULE2"));
         return false;
-        break;
     case "updateModule":
         require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_admin_after.php");
         echo CAdminMessage::ShowMessage(Loc::getMessage("TR_CA_DOCS_UPDATE_FORMS_MODULE"));
         return false;
+    default:
         break;
-    default: break;
 }
 
 Loader::includeModule("trusted.cryptoarmdocsforms");
 if (CModule::IncludeModuleEx(TR_CA_DOCS_CORE_MODULE) == MODULE_DEMO_EXPIRED) {
     echo GetMessage("TR_CA_DOCS_MODULE_DEMO_EXPIRED");
     return false;
-};
+}
 Loader::includeModule(TR_CA_DOCS_CORE_MODULE);
 
 Loc::loadMessages($docRoot . "/bitrix/modules/" . TR_CA_DOCS_CORE_MODULE . "/admin/trusted_cryptoarm_docs.php");
@@ -53,8 +53,9 @@ $reloadTableJs = $sTableID . '.GetAdminList("")';
 
 function CheckFilter() {
     global $FilterArr, $lAdmin;
-    foreach ($FilterArr as $f)
-        global $$f;
+    foreach ($FilterArr as $f) {
+	    global $$f;
+    }
     // return false on errors
     return count($lAdmin->arFilterErrors) == 0;
 }

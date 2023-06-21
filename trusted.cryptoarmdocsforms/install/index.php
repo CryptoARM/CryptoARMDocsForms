@@ -44,16 +44,16 @@ Class trusted_cryptoarmdocsforms extends CModule
 
         include __DIR__ . "/version.php";
 
-        if (!self::d7Support() || !self::coreModuleInstalled() || self::CoreAndModuleAreCompatible() !== "ok" ) {
+        if (!$this->d7Support() || !$this::coreModuleInstalled() || $this::CoreAndModuleAreCompatible() !== "ok" ) {
             $APPLICATION->IncludeAdminFile(
                 Loc::getMessage("MOD_INSTALL_TITLE"),
                  $DOCUMENT_ROOT . "/bitrix/modules/" . self::MODULE_ID . "/install/step_cancel.php"
             );
         }
-        self::InstallFiles();
-        self::InstallModuleOptions();
-        self::InstallIb();
-        self::InstallMailEvents();
+	    $this->InstallFiles();
+	    $this->InstallModuleOptions();
+	    $this->InstallIb();
+	    $this->InstallMailEvents();
 
         ModuleManager::registerModule(self::MODULE_ID);
     }
@@ -117,7 +117,7 @@ Class trusted_cryptoarmdocsforms extends CModule
 
     function InstallMailEvents()
     {
-        $obEventType = new CEventType;
+        $obEventType = new CEventType();
         $events = array(
             array(
                 "LID" => "ru",
@@ -138,7 +138,7 @@ Class trusted_cryptoarmdocsforms extends CModule
             $obEventType->add($event);
         }
 
-        $obEventMessage = new CEventMessage;
+        $obEventMessage = new CEventMessage();
         $sites = CSite::GetList($by = "sort", $order = "asc", array("ACTIVE" => "Y"));
         $siteIds = array();
         while ($site = $sites->Fetch()) {
@@ -192,12 +192,12 @@ Class trusted_cryptoarmdocsforms extends CModule
 
         $deleteiblocks = $request["deleteiblocks"];
         if ($deleteiblocks == "Y") {
-            trusted_cryptoarmdocsforms::UnInstallIb();
+			$this->UnInstallIb();
         }
 
-        self::UnInstallModuleOptions();
-        self::UnInstallMailEvents();
-        self::UnInstallFiles();
+        $this->UnInstallModuleOptions();
+	    $this->UnInstallMailEvents();
+	    $this->UnInstallFiles();
         ModuleManager::unRegisterModule(self::MODULE_ID);
     }
 
@@ -245,11 +245,11 @@ Class trusted_cryptoarmdocsforms extends CModule
                 $order = 'desc',
                 array('TYPE' => $event)
             );
-            $eventMessage = new CEventMessage;
+            $eventMessage = new CEventMessage();
             while ($template = $eventMessages->Fetch()) {
                 $eventMessage->Delete((int)$template['ID']);
             }
-            $eventType = new CEventType;
+            $eventType = new CEventType();
             $eventType->Delete($event);
         }
     }

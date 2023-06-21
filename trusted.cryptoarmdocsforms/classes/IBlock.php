@@ -30,7 +30,7 @@ class IBlock {
 
     public static function createType() {
         global $DB;
-        $ibType = new \CIBlockType;
+        $ibType = new \CIBlockType();
 
         // Check if ib type already exists
         if ($ibType->GetByID(TR_CA_IB_TYPE_ID)->Fetch()) {

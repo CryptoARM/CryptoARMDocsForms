@@ -19,6 +19,7 @@ header('Content-Type: application/json; charset=' . LANG_CHARSET);
 // AJAX Controller
 
 $command = $_GET['command'];
+$res = ["success" => false, "message" => "Command is not found"];
 if (isset($command)) {
     $params = $_POST;
     switch ($command) {
@@ -26,7 +27,7 @@ if (isset($command)) {
             $res = Docs\Form::removeIBlockAndDocs($params);
             break;
         default:
-            $res = array("success" => false, "message" => "Unknown command '" . $command . "'");
+            $res = ["success" => false, "message" => "Unknown command '" . $command . "'"];
     }
 }
 echo json_encode($res);

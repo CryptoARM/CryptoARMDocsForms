@@ -22,12 +22,13 @@ include __DIR__ . "/version.php";
     <input type="hidden" name="id" value="trusted.cryptoarmdocsforms">
     <input type="hidden" name="install" value="N">
     <?php
-        $res = trusted_cryptoarmdocsforms::CoreAndModuleAreCompatible();
+        $trusted_cryptoarmdocsforms = new trusted_cryptoarmdocsforms();
+        $res = $trusted_cryptoarmdocsforms->CoreAndModuleAreCompatible();
 
         if (!CheckVersion(ModuleManager::getVersion("main"), "14.00.00")) {
             echo CAdminMessage::ShowMessage(Loc::getMessage("TR_CA_DOCS_NO_D7"));
         }
-        elseif (!trusted_cryptoarmdocsforms::coreModuleInstalled()){
+        elseif (!$trusted_cryptoarmdocsforms->coreModuleInstalled()){
             echo CAdminMessage::ShowMessage(Loc::getMessage("TR_CA_DOCS_NO_CORE_MODULE"));
         }
         elseif ($res === "updateCore") {
