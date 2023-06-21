@@ -443,7 +443,7 @@ class Form {
                 'message' => 'PDF created',
                 'data' => $docId,
             ];
-            $iBlockElem = new \CIBlockElement;
+            $iBlockElem = new \CIBlockElement();
             $iBlockElem->Update($elementId, ["NAME" => $docId]);
         }
 
